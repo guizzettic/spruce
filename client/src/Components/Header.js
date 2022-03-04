@@ -8,12 +8,12 @@ const useStyles = makeStyles({
     top: 0,
     left: 0,
     backgroundColor: 'white',
-    height: '5vh',
+    height: '6vh',
   },
   logo: {
     textAlign: 'left',
     width: 100,
-    padding: 3,
+    padding: 5,
   },
 });
 
