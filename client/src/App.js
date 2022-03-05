@@ -3,6 +3,8 @@ import { createTheme, makeStyles } from '@material-ui/core/styles';
 import Header from './Components/Header';
 import { Button } from '@material-ui/core';
 import BookingTable from './Components/BookingTable';
+import { useState } from 'react';
+import BookingForm from './Components/BookingForm';
 
 const useStyles = makeStyles({
   container: {
@@ -25,21 +27,35 @@ const useStyles = makeStyles({
     backgroundColor: 'orange',
     height: 40,
     borderRadius: 8,
+    textTransform: 'none',
   },
 });
 
 function App() {
+  const [showForm, setShowForm] = useState(false);
   const classes = useStyles();
+
+  const openForm = (e) => {
+    e.preventDefault();
+    setShowForm(!showForm);
+  };
 
   return (
     <div className={classes.container}>
       <Header />
       <div className={classes.bookingComponent}>
         <h1 style={{ fontWeight: 400 }}>Bookings</h1>
-        <Button variant="contained" className={classes.bookingButon}>
+        <Button
+          variant="contained"
+          className={classes.bookingButon}
+          onClick={openForm}
+        >
           Create booking
         </Button>
       </div>
+      {showForm && (
+        <BookingForm showForm={showForm} setShowForm={setShowForm} />
+      )}
       <BookingTable />
     </div>
   );

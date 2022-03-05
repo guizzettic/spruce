@@ -14,6 +14,9 @@ const useStyles = makeStyles({
     width: '98.5%',
     margin: '0 auto',
   },
+  title: {
+    backgroundColor: 'darkgrey',
+  },
 });
 
 const BookingTable = () => {
@@ -62,11 +65,19 @@ const BookingTable = () => {
       <Table sx={{ minWidth: 650 }} aria-label="bookings table">
         <TableHead>
           <TableRow>
-            <TableCell>Customer</TableCell>
-            <TableCell align="center">Email</TableCell>
-            <TableCell align="center">Address</TableCell>
-            <TableCell align="right">Booking Type</TableCell>
-            <TableCell align="right">Booking Date/Time</TableCell>
+            <TableCell className={classes.title}>Customer</TableCell>
+            <TableCell className={classes.title} align="center">
+              Email
+            </TableCell>
+            <TableCell className={classes.title} align="center">
+              Address
+            </TableCell>
+            <TableCell className={classes.title} align="right">
+              Booking Type
+            </TableCell>
+            <TableCell className={classes.title} align="right">
+              Booking Date/Time
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -75,7 +86,7 @@ const BookingTable = () => {
               key={booking.customer}
               sx={{ '&:last-child td, &last-child th': { borders: 0 } }}
             >
-              <TableCell align="">{booking.customer}</TableCell>
+              <TableCell>{booking.customer}</TableCell>
               <TableCell align="center">{booking.email}</TableCell>
               <TableCell align="center">{booking.address}</TableCell>
               <TableCell align="right">{booking.bookingType}</TableCell>
