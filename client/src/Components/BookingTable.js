@@ -8,6 +8,7 @@ import {
   Paper,
   makeStyles,
 } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 
 const useStyles = makeStyles({
   bookingTable: {
@@ -30,36 +31,44 @@ const BookingTable = () => {
   ) => {
     return { customer, email, address, bookingType, bookingDate };
   };
-  const data = [
-    createBookings(
-      'Jon Stewart',
-      'jon@daily.show',
-      '5323 Levander Loop Austin, TX. 78702',
-      'Housekeeping',
-      'June 5, 2019 at 9:00am'
-    ),
-    createBookings(
-      'Stephen Colbert',
-      'stephen@daily.show',
-      '5332 Levander loop Austin, Tx',
-      'Housekeeping',
-      'June 5, 2019 at 9:00am'
-    ),
-    createBookings(
-      'Trevor Noah',
-      'trevor@daily.show',
-      '5332 Levander loop Austin, Tx',
-      'Housekeeping',
-      'June 5, 2019 at 9:00am'
-    ),
-    createBookings(
-      'Testing name',
-      'jon@daily.show',
-      '5332 Levander loop Austin, Tx',
-      'Housekeeping',
-      'June 5, 2019 at 9:00am'
-    ),
-  ];
+
+  const [bookingData, setBookingData] = useState(null);
+
+  const fetchBookings = () => {
+    let url = 'https://bookingapi-b86e.restdb.io/rest/bookings';
+
+    fetch(url, {
+      headers: {
+        'x-apikey': '5d03eb2a27bc5b75bfeb7c7a',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(sortBookings(data));
+      })
+      .catch((err) => console.errror(err));
+  };
+
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
+  function sortBookings(bookingDetails) {
+    return bookingDetails.sort((a, b) => a.datetime - b.datetime);
+  }
+
+  function transformDate(date) {
+    let formattedDate = new Date(date).toLocaleString('en-us', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour12: 'true',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    formattedDate = formattedDate.split(',');
+    return `${formattedDate[0]}, ${formattedDate[1]} at ${formattedDate[2]}`;
+  }
   return (
     <TableContainer component={Paper} className={classes.bookingTable}>
       <Table sx={{ minWidth: 650 }} aria-label="bookings table">
@@ -81,18 +90,21 @@ const BookingTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((booking) => (
-            <TableRow
-              key={booking.customer}
-              sx={{ '&:last-child td, &last-child th': { borders: 0 } }}
-            >
-              <TableCell>{booking.customer}</TableCell>
-              <TableCell align="center">{booking.email}</TableCell>
-              <TableCell align="center">{booking.address}</TableCell>
-              <TableCell align="right">{booking.bookingType}</TableCell>
-              <TableCell align="right">{booking.bookingDate}</TableCell>
-            </TableRow>
-          ))}
+          {bookingData &&
+            bookingData.map((booking) => (
+              <TableRow
+                key={booking.customer}
+                sx={{ '&:last-child td, &last-child th': { borders: 0 } }}
+              >
+                <TableCell>{booking.name}</TableCell>
+                <TableCell align="center">{booking.email}</TableCell>
+                <TableCell align="center">{booking.address}</TableCell>
+                <TableCell align="right">{booking.bookingtype}</TableCell>
+                <TableCell align="right">
+                  {transformDate(booking.datetime)}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
