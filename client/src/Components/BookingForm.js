@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -12,13 +12,27 @@ import {
   Button,
   makeStyles,
 } from '@material-ui/core';
+import api from '../swagger.json';
+console.log(api);
+const apiPath = api.paths['/bookings'];
+console.log(apiPath);
 
 const useStyles = makeStyles({
   submitButton: {
     backgroundColor: 'orange',
     textTransform: 'none',
   },
+  infoFields: {
+    width: '47%',
+  },
 });
+// need to stay focused, want one thing, get caught up in the stress
+// stress is a little bit to stay focused; dont ose focus of the result
+// write it down, i'm so blssed... i have
+// every morning for next two weeks, visualize how you felt during medittation (peace, relaxed) and ascciate it with bllessed
+//  'im so happy i have the right software engineering in the next month, '  be more specific, be focused on it and have to be in a good feeling
+
+// 917-301-2313 - Scarlett Mendoza
 
 const BookingForm = ({ showForm, setShowForm }) => {
   const [bookingInfo, setBookingInfo] = useState({
@@ -58,7 +72,13 @@ const BookingForm = ({ showForm, setShowForm }) => {
     return <div style={{ color: 'grey' }}>{children}</div>;
   };
 
-  const test = 1;
+  const verifyInput = () => {
+    return (
+      Object.values(bookingInfo).filter((value) => value.length > 0).length ===
+      0
+    );
+  };
+
   return (
     <form>
       <Dialog open={showForm} onClose={handleClose} fullWidth>
@@ -73,12 +93,12 @@ const BookingForm = ({ showForm, setShowForm }) => {
               type="text"
               halfWidth
               variant="outlined"
-              style={{ width: '47%' }}
+              className={classes.infoFields}
               onChange={(e) =>
                 setBookingInfo({ ...bookingInfo, name: e.target.value })
               }
             />
-            <FormControl style={{ width: '47%' }}>
+            <FormControl className={classes.infoFields}>
               <InputLabel>Booking Type</InputLabel>
               <Select
                 value={bookingInfo.bookingType}
@@ -110,7 +130,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
               type="email"
               halfWidth
               variant="outlined"
-              style={{ width: '47%' }}
+              className={classes.infoFields}
               onChange={(e) =>
                 setBookingInfo({ ...bookingInfo, email: e.target.value })
               }
@@ -124,7 +144,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
               type="text"
               halfWidth
               variant="outlined"
-              style={{ width: '47%' }}
+              className={classes.infoFields}
               onChange={(e) =>
                 setBookingInfo({
                   ...bookingInfo,
@@ -143,7 +163,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
               type="text"
               halfWidth
               variant="outlined"
-              style={{ width: '47%' }}
+              className={classes.infoFields}
               onChange={(e) =>
                 setBookingInfo({
                   ...bookingInfo,
@@ -159,7 +179,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
               type="text"
               halfWidth
               variant="outlined"
-              style={{ width: '47%' }}
+              className={classes.infoFields}
               onChange={(e) =>
                 setBookingInfo({
                   ...bookingInfo,
@@ -174,7 +194,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
             id="name"
             label="City"
             type="text"
-            style={{ width: '47%' }}
+            className={classes.infoFields}
             halfWidth
             variant="outlined"
             onChange={(e) =>
@@ -189,9 +209,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
             }}
           >
             <TextField
-              style={{
-                width: '48%',
-              }}
+              className={classes.infoFields}
               autoFocus
               margin="dense"
               id="name"
@@ -204,9 +222,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
               }
             />
             <TextField
-              style={{
-                width: '48%',
-              }}
+              className={classes.infoFields}
               autoFocus
               margin="dense"
               id="name"
@@ -224,6 +240,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
           <Button
             onClick={handleSubmit}
             variant="outlined"
+            disabled={verifyInput()}
             className={classes.submitButton}
           >
             Create booking

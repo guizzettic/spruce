@@ -7,8 +7,10 @@ import {
   TableBody,
   Paper,
   makeStyles,
+  LinearProgress,
 } from '@material-ui/core';
 import { useEffect, useState } from 'react';
+import { sortBookings, transformDate } from '../utils';
 
 const useStyles = makeStyles({
   bookingTable: {
@@ -33,9 +35,11 @@ const BookingTable = () => {
   };
 
   const [bookingData, setBookingData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchBookings = () => {
     let url = 'https://bookingapi-b86e.restdb.io/rest/bookings';
+    setLoading(true);
 
     fetch(url, {
       headers: {
@@ -44,6 +48,7 @@ const BookingTable = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false);
         setBookingData(sortBookings(data));
       })
       .catch((err) => console.errror(err));
@@ -53,22 +58,6 @@ const BookingTable = () => {
     fetchBookings();
   }, []);
 
-  function sortBookings(bookingDetails) {
-    return bookingDetails.sort((a, b) => a.datetime - b.datetime);
-  }
-
-  function transformDate(date) {
-    let formattedDate = new Date(date).toLocaleString('en-us', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour12: 'true',
-      hour: 'numeric',
-      minute: 'numeric',
-    });
-    formattedDate = formattedDate.split(',');
-    return `${formattedDate[0]}, ${formattedDate[1]} at ${formattedDate[2]}`;
-  }
   return (
     <TableContainer component={Paper} className={classes.bookingTable}>
       <Table sx={{ minWidth: 650 }} aria-label="bookings table">
@@ -89,6 +78,7 @@ const BookingTable = () => {
             </TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {bookingData &&
             bookingData.map((booking) => (
@@ -107,6 +97,11 @@ const BookingTable = () => {
             ))}
         </TableBody>
       </Table>
+      {loading && (
+        <div style={{ padding: '40px 0', width: '100%' }}>
+          <LinearProgress />
+        </div>
+      )}
     </TableContainer>
   );
 };

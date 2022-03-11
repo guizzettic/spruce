@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     top: 0,
     left: 0,
     backgroundColor: 'white',
-    height: '6vh',
+    height: 45,
   },
   logo: {
     textAlign: 'left',

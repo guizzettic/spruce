@@ -20,7 +20,6 @@ const useStyles = makeStyles({
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-    // backgroundColor: 'grey',
     marginTop: '-5px',
   },
   bookingButon: {
