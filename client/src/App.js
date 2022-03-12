@@ -56,6 +56,8 @@ function App() {
         <BookingForm showForm={showForm} setShowForm={setShowForm} />
       )}
       <BookingTable />
+
+      <br />
     </div>
   );
 }
