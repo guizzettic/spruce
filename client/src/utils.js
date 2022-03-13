@@ -30,8 +30,12 @@ export function stringifyData(bookingInfo) {
     datetime: `${bookingInfo.bookingDate} ${bookingInfo.bookingTime}`,
   });
 }
+
+// quick verfication that all fields have info on them
 export function verifyInput(bookingInfo) {
+  let length = Object.keys(bookingInfo).length - 1;
   return (
-    Object.values(bookingInfo).filter((value) => value.length > 0).length === 0
+    Object.values(bookingInfo).filter((value) => value.length > 0).length ===
+    length
   );
 }

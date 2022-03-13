@@ -20,8 +20,20 @@ const useStyles = makeStyles({
     backgroundColor: 'orange',
     textTransform: 'none',
   },
-  infoFields: {
+  infoFields: { width: '47%' },
+  placeholder: { color: 'grey' },
+  submissionMessage: {
+    paddingLeft: 25,
+    paddingBottom: 30,
+  },
+  formFields: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  miniFormFields: {
     width: '47%',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 });
 
@@ -68,7 +80,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
           bookingTime: '',
         });
       })
-      .catch((err) => console.log('error found: ', err));
+      .catch((err) => console.error('error found: ', err));
   };
 
   const classes = useStyles();
@@ -91,7 +103,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
   };
 
   const Placeholder = ({ children }) => {
-    return <div style={{ color: 'grey' }}>{children}</div>;
+    return <div className={classes.placeholder}>{children}</div>;
   };
 
   return (
@@ -102,7 +114,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
             <DialogTitle sx={{ fontWeight: 200 }}>
               Submission Successful
             </DialogTitle>
-            <DialogContentText style={{ paddingLeft: 25, paddingBottom: 30 }}>
+            <DialogContentText className={classes.submissionMessage}>
               Thank you for submitting a booking.
             </DialogContentText>
           </div>
@@ -110,7 +122,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
           <div>
             <DialogTitle sx={{ fontWeight: '200' }}>Create Booking</DialogTitle>
             <DialogContent>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className={classes.formFields}>
                 <TextField
                   autoFocus
                   margin="dense"
@@ -145,7 +157,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
                 </FormControl>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className={classes.formFields}>
                 <TextField
                   margin="dense"
                   id="name"
@@ -174,7 +186,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
                 />
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className={classes.formFields}>
                 <TextField
                   margin="dense"
                   id="name"
@@ -215,13 +227,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
                   setBookingInfo({ ...bookingInfo, city: e.target.value })
                 }
               />
-              <div
-                style={{
-                  width: '47%',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <div className={classes.miniFormFields}>
                 <TextField
                   className={classes.infoFields}
                   margin="dense"

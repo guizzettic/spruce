@@ -28,6 +28,7 @@ const useStyles = makeStyles({
     borderRadius: 8,
     textTransform: 'none',
   },
+  title: { fontWeight: 400 },
 });
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
     <div className={classes.container}>
       <Header />
       <div className={classes.bookingComponent}>
-        <h1 style={{ fontWeight: 400 }}>Bookings</h1>
+        <h1 className={classes.title}>Bookings</h1>
         <Button
           variant="contained"
           className={classes.bookingButon}

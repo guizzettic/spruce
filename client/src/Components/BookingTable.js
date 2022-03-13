@@ -17,9 +17,9 @@ const useStyles = makeStyles({
     width: '98.5%',
     margin: '0 auto',
   },
-  title: {
-    backgroundColor: 'darkgrey',
-  },
+  title: { backgroundColor: 'darkgrey' },
+  sticky: { position: 'sticky', top: 0 },
+  loadingBar: { padding: '40px 0', width: '100%' },
 });
 
 const BookingTable = () => {
@@ -62,7 +62,7 @@ const BookingTable = () => {
     <TableContainer component={Paper} className={classes.bookingTable}>
       <Table sx={{ minWidth: 650 }} aria-label="bookings table">
         <TableHead>
-          <TableRow>
+          <TableRow className={classes.sticky}>
             <TableCell className={classes.title}>Customer</TableCell>
             <TableCell className={classes.title} align="center">
               Email
@@ -98,7 +98,7 @@ const BookingTable = () => {
         </TableBody>
       </Table>
       {loading && (
-        <div style={{ padding: '40px 0', width: '100%' }}>
+        <div className={classes.loadingBar}>
           <LinearProgress />
         </div>
       )}
