@@ -1,6 +1,4 @@
-# spruce
-
-# Sure TakeHome
+# Spruce Takehome
 
 
 ## Tech Used:
