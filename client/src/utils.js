@@ -27,7 +27,7 @@ export function stringifyData(bookingInfo) {
     city: bookingInfo.city,
     zip: Number(bookingInfo.zip),
     bookingtype: bookingInfo.bookingtype,
-    datetime: `${bookingInfo.bookingDate} ${bookingInfo.bookingTime}`,
+    datetime: new Date(`${bookingInfo.bookingDate} ${bookingInfo.bookingTime}`),
   });
 }
 
