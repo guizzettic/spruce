@@ -1,6 +1,6 @@
 import logo from '../logo.svg';
 
-import { createTheme, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   header: {

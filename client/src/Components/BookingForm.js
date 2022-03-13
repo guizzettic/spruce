@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -51,6 +51,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
     bookingTime: '',
   });
   const [successSubmission, setSuccessSubmission] = useState(false);
+  const classes = useStyles();
 
   const submitForm = () => {
     let url = 'https://bookingapi-b86e.restdb.io/rest/bookings';
@@ -83,23 +84,9 @@ const BookingForm = ({ showForm, setShowForm }) => {
       .catch((err) => console.error('error found: ', err));
   };
 
-  const classes = useStyles();
-
   const handleClose = (e) => {
     e.preventDefault();
     setShowForm(false);
-  };
-
-  const handleBooking = (e, type) => {
-    e.preventDefault();
-    let temp = { ...bookingInfo };
-    temp[type] = e.target.value;
-
-    setBookingInfo(temp);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
   };
 
   const Placeholder = ({ children }) => {
@@ -139,7 +126,12 @@ const BookingForm = ({ showForm, setShowForm }) => {
                   <InputLabel>Booking Type</InputLabel>
                   <Select
                     value={bookingInfo.bookingtype}
-                    onChange={(e) => handleBooking(e, 'bookingtype')}
+                    onChange={(e) =>
+                      setBookingInfo({
+                        ...bookingInfo,
+                        bookingtype: e.target.value,
+                      })
+                    }
                     displayEmpty={true}
                     renderValue={
                       bookingInfo.bookingtype.length === 0 ||
@@ -254,7 +246,6 @@ const BookingForm = ({ showForm, setShowForm }) => {
             </DialogContent>
             <DialogActions>
               <Button
-                onClick={handleSubmit}
                 variant="outlined"
                 disabled={verifyInput(bookingInfo)}
                 onClick={submitForm}
@@ -262,7 +253,7 @@ const BookingForm = ({ showForm, setShowForm }) => {
               >
                 Create booking
               </Button>
-            </DialogActions>{' '}
+            </DialogActions>
           </div>
         )}
       </Dialog>

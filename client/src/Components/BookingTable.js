@@ -24,15 +24,6 @@ const useStyles = makeStyles({
 
 const BookingTable = () => {
   const classes = useStyles();
-  const createBookings = (
-    customer,
-    email,
-    address,
-    bookingType,
-    bookingDate
-  ) => {
-    return { customer, email, address, bookingType, bookingDate };
-  };
 
   const [bookingData, setBookingData] = useState(null);
   const [loading, setLoading] = useState(true);
